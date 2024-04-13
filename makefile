@@ -1,15 +1,13 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall
-TARGET = infix2postfix
-SRCS = infix2postfix.cpp
 
-$(TARGET): $(SRCS)
+LP: lexical_parser.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-.PHONY: clean
-clean:
-	rm -f $(TARGET)
+.PHONY: cleanLP
+cleanLP:
+	rm -f LP
 
-.PHONY: run
-run: $(TARGET)
-	./$(TARGET)
+.PHONY: runLP
+runLP: LP
+	./LP
