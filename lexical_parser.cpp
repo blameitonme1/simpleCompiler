@@ -33,7 +33,7 @@ unordered_set<string>Keywords{"int", "float", "break", "case", "char",
 unordered_set<char>Operators_single{'+', '-', '/', '*','=','<','>','&','|','%','^'}; // 单字运算符,考虑位操作
 unordered_set<string>Operators_double{">=","<=","==", "!=","&&","||",">>","<<","+=","-=",
 "*=","/=","%=","&=","|=","^="}; // 双字运算符,考虑位操作
-unordered_set<char>Delimiters{';', '(', ')', '{', '}',','};
+unordered_set<char>Delimiters{';', '(', ')', '{', '}',',','[',']'};
 
 size_t row = 0; // 记录行数，方便精准定位
 
