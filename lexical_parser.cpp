@@ -56,6 +56,7 @@ void shoot_error(){
 void show_howmany_lines(){
     cout << "All " << row << " lines of code" << endl;
 }
+
 void tokenize(const string& input){
     Token token;
     int i = 0; // 当前字符下标
