@@ -5,31 +5,19 @@
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
+#include "lexical_parser.h"
 using namespace std;
 
-enum tokenType {
-    KEYWORD, //关键字
-    IDENTIFIER, //标识符
-    NUMBER, //常数
-    OPERATOR, // 操作符
-    DELIMITER // 分割符，比如冒号或者分号
-};
 
 unordered_map<int, string> typeNum2typeName {{0,"keyword"},{1,"identifier"},
 {2,"number"},{3,"operator"},{4,"delimiter"}};
 
-struct Token // 分析得到的数据结构，传递给语法分析器
-{
-    tokenType type; // key
-    string lexeme; // value
-};
-
-vector<Token>allTokens;
+vector<Token>tokens;
 unordered_set<string>Keywords{"int", "float", "break", "case", "char",
 "const", "continue", "default", "do", "while", "for", "double", "else", "enum",
 "extern", "for", "goto", "if", "inline", "long", "return", "short",
 "signed", "unsigned", "sizeof", "static", "register", "struct", "switch",
-"typedef", "union", "void", "main"};
+"typedef", "union", "void"};
 unordered_set<char>Operators_single{'+', '-', '/', '*','=','<','>','&','|','%','^'}; // 单字运算符,考虑位操作
 unordered_set<string>Operators_double{">=","<=","==", "!=","&&","||",">>","<<","+=","-=",
 "*=","/=","%=","&=","|=","^="}; // 双字运算符,考虑位操作
@@ -44,7 +32,7 @@ void debug_info(const Token& token){
 
 void record_token_and_clear(Token& token){
     // 全局记录token并且清除token的lexeme
-    allTokens.push_back(token);
+    tokens.push_back(token);
     token.lexeme.clear();
 }
 
@@ -132,23 +120,4 @@ void tokenize(const string& input){
         record_token_and_clear(token);
         ++i;
     }
-}
-
-int main() {
-    ifstream file("./srccode.txt");
-    if(!file.is_open()){
-        cerr << "Failed to open file." << endl;
-        return 1;
-    }
-    string content = "";
-    string line = "";
-    while(getline(file, line)){
-        content += line + "\n";
-    }
-    cout << "content:\n" << content << endl;
-
-    tokenize(content);
-    show_howmany_lines();
-    getchar();
-    return 0;
 }

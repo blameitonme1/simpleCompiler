@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <unordered_map>
 
+// 枚举类型定义
 enum tokenType {
     KEYWORD, //关键字
     IDENTIFIER, //标识符
@@ -14,13 +15,15 @@ enum tokenType {
     DELIMITER //分割符，比如冒号或者分号
 };
 
+// Token 结构体定义
 struct Token {
     tokenType type; // Token 类型
     std::string lexeme; // Token 词素
 };
 
 // 全局变量声明
-extern std::vector<Token> allTokens;
+extern std::unordered_map<int, std::string> typeNum2typeName;
+extern std::vector<Token> tokens;
 extern std::unordered_set<std::string> Keywords;
 extern std::unordered_set<char> Operators_single;
 extern std::unordered_set<std::string> Operators_double;
