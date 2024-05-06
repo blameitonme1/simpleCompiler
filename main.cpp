@@ -1,9 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <cstdio>
 #include "lexical_parser.h"
 #include "syntax_parser.h"
 using namespace std;
+
 int main(){
     // 获取代码
     ifstream file("./srccode.txt");

@@ -5,7 +5,7 @@ PROJECT_NAME = main
 CC = g++
 
 # 编译器标志
-CFLAGS = -std=c++17 -Wall -Wextra -pedantic
+CFLAGS = -std=c++17 -Wall -Wextra -pedantic -finstrument-functions
 
 # 链接器标志
 LDFLAGS = 
@@ -15,15 +15,6 @@ SOURCES = main.cpp lexical_parser.cpp syntax_parser.cpp
 
 # 头文件目录
 INCLUDE_DIRS = -Iinclude
-
-# 库目录
-LIBRARY_DIRS = 
-
-# 库
-LIBRARIES = 
-
-# 目标文件目录
-BUILD_DIR = build
 
 # 可执行文件目录
 BIN_DIR = bin
@@ -40,11 +31,11 @@ EXECUTABLE = $(PROJECT_NAME)
 all: $(BIN_DIR)/$(EXECUTABLE)
 
 # 编译可执行文件
-$(BIN_DIR)/$(EXECUTABLE): $(BUILD_DIR)/$(OBJECTS)
+$(BIN_DIR)/$(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
 # 编译目标文件
-$(BUILD_DIR)/%.o: %.cpp
+%.o: %.cpp
 	$(CC) $(CFLAGS) $(INCLUDE_DIRS) -c $< -o $@
 
 # 运行可执行文件
@@ -53,8 +44,8 @@ run: $(BIN_DIR)/$(EXECUTABLE)
 
 # 清理构建文件
 clean:
-	rm -rf $(BUILD_DIR) $(BIN_DIR)
+	rm -rf $(OBJECTS) $(BIN_DIR)/$(EXECUTABLE)
 
-# 创建构建目录
-$(BUILD_DIR) $(BIN_DIR):
+# 创建可执行文件目录
+$(BIN_DIR):
 	mkdir -p $@
