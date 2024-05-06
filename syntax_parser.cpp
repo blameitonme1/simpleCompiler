@@ -6,6 +6,7 @@
 #include "syntax_parser.h"
 
 
+
 size_t currentToken = 0; // 下标指向当前分析的token
 
 bool match(tokenType expectedType) {
@@ -107,6 +108,8 @@ int declaration() {
 }
 
 int varDeclaration() {
+    std::cout << "var declaration " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(typeSpecifier() == 1){
         return 1;
     } // 解析变量类型
@@ -135,6 +138,8 @@ int varDeclaration() {
 }
 
 int typeSpecifier(){
+    std::cout << " type specifier " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(!match(KEYWORD)){
         error("Expected type specifier (int or void)");
         return 1;
@@ -148,6 +153,8 @@ int typeSpecifier(){
 
 int funDeclaration() {
     // 匹配函数声明
+    std::cout << "fun declaration " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(typeSpecifier() == 1){
         return 1;
     }
@@ -182,6 +189,8 @@ int funDeclaration() {
 int params(){
     // 匹配参数列表
     // std::cout << tokens[currentToken].lexeme << std::endl;
+    std::cout << "param " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(tokens[currentToken].lexeme == "void"){
         // std::cout << "retuing" << std::endl;
         currentToken++;
@@ -195,6 +204,8 @@ int params(){
 
 int paramList(){
     // 匹配有实际参数的时候的参数列表
+    std::cout << "paramlist " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(param() == 1){
         return 1;
     }
@@ -212,6 +223,8 @@ int paramList(){
 int param(){
     // 匹配单个参数
     // std::cout << tokens[currentToken].lexeme << std::endl;
+    std::cout << "param " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(typeSpecifier() == 1){
         return 1;
     }
@@ -244,6 +257,8 @@ int param(){
 
 int compoundStmt(){
     // 匹配复合语句
+    std::cout << "compund stmt " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(!match(DELIMITER) || tokens[currentToken - 1].lexeme != "{"){
         error("Expected { at the begining of compound statement");
         return 1;
@@ -267,6 +282,8 @@ int compoundStmt(){
 }
 
 int localDeclarations() {
+    std::cout << "local declaration " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     int tokenNum = currentToken;
     bool x = false;
     while (true) {
@@ -284,6 +301,8 @@ int localDeclarations() {
 }
 
 int statementList() {
+    std::cout << "statement list " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     int tokenNum = currentToken;
     bool x = false;
     while (true) {
@@ -302,6 +321,8 @@ int statementList() {
 int statement(){
     // 匹配语句
     // 前看符号防止回溯
+    std::cout << "statement " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(tokens[currentToken].lexeme == "{"){
         // compound statement
         if(compoundStmt() == 1){
@@ -341,6 +362,8 @@ int statement(){
 }
 
 int expressionStmt(){
+    std::cout << "expression statement " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     std::cout << "expression STMT " << tokens[currentToken].lexeme << std::endl;
     if(match(DELIMITER) && tokens[currentToken - 1].lexeme == ";"){
         return 0;
@@ -359,6 +382,8 @@ int expressionStmt(){
 
 int selectionStmt(){
     // 选择语句
+    std::cout << "selection statement " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(!match(KEYWORD) || tokens[currentToken - 1].lexeme != "if"){
         error("Expectd if in the begining of selection statement");
         return 1;
@@ -387,6 +412,8 @@ int selectionStmt(){
 }
 int iterationStmt(){
     // 匹配循环语句
+    std::cout << "iteration declaration " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(!match(KEYWORD) || tokens[currentToken - 1].lexeme != "while"){
         error("Expected while");
         return 1;
@@ -409,6 +436,8 @@ int iterationStmt(){
 }
 int returnStmt(){
     // 匹配返回语句
+    std::cout << "return statement " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(!match(KEYWORD) || tokens[currentToken - 1].lexeme != "return"){
         error("Expected return");
         return 1;
@@ -428,6 +457,8 @@ int returnStmt(){
 }
 int expression(){
     // 匹配通常表达式
+    std::cout << "expression " << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     while(tokens[currentToken + 1].lexeme == "="){
         // 先匹配 若干个 'var='
         if(var() == 1){
@@ -438,11 +469,9 @@ int expression(){
             error("Expected = or ==");
             return 1;
         }
-        if(expression() == 1){
-            // 递归匹配
-            return 1;
-        }
+        // 注意是这里出现bug!!!
     }
+    std::cout << "debug expression calling simple expression " << tokens[currentToken].lexeme << std::endl;
     if(simpleExpression() == 1){
         // 最后匹配一个简单表达式
         std::cout << "simple error " << tokens[currentToken].lexeme << std::endl;
@@ -474,6 +503,7 @@ int var(){
 
 int simpleExpression(){
     std::cout << "simple expression" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     // 匹配一条简单表达式
     if(additiveExpression() == 1){
         std::cout << "first addExe error " << tokens[currentToken].lexeme << std::endl;
@@ -495,6 +525,7 @@ int simpleExpression(){
 
 int relop(){
     std::cout << "relop" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     std::string forward = tokens[currentToken].lexeme;  
     if(forward == "<=" || forward == "<" || forward == ">" || forward == ">=" || forward == "==" || forward == "!="){
         currentToken++; // 只在这里加
@@ -509,6 +540,7 @@ int relop(){
 int additiveExpression(){
     // 加法表达式
     std::cout << "add Exp" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(term() == 1){
         std::cout << "first term error" << tokens[currentToken].lexeme << std::endl;
         return 1;
@@ -526,6 +558,8 @@ int additiveExpression(){
 int term(){
     // term
     std::cout << "term" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(factor() == 1){
         std::cout << "first factor error term" << tokens[currentToken].lexeme << std::endl;
         return 1;
@@ -541,6 +575,7 @@ int term(){
 }
 int factor(){
     std::cout << "factor" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(match(NUMBER)){
         // std::cout << "number!" << std::endl;
         return 0;
@@ -576,6 +611,7 @@ int factor(){
 }
 int call(){
     std::cout << "call:" << tokens[currentToken].lexeme << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(!match(IDENTIFIER)){
         error("Expected ID");
         return 1;
@@ -596,11 +632,12 @@ int call(){
         error("Expected )");
         return 1;
     }
-    std::cout << "call finish:" << tokens[currentToken].lexeme << std::endl;
+    std::cout << "call finish last:" << tokens[currentToken].lexeme << std::endl;
     return 0;
 }
 int args(){
     std::cout << "arg" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     int tokenNum = currentToken;
     std::cout << " args: " << tokens[currentToken].lexeme << std::endl;
     if(argList() == 1){
@@ -610,6 +647,7 @@ int args(){
 }
 int argList(){
     std::cout << "arglist" << std::endl;
+    std::cout << tokens[currentToken].lexeme << std::endl;
     if(expression() == 1){
         return 1;
     }

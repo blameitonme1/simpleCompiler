@@ -49,3 +49,8 @@ clean:
 # 创建可执行文件目录
 $(BIN_DIR):
 	mkdir -p $@
+
+# 调试目标
+debug: $(BIN_DIR)/$(EXECUTABLE)
+	gdb --args $(BIN_DIR)/$(EXECUTABLE)
+
