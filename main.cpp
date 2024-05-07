@@ -23,7 +23,7 @@ int main(){
     tokenize(content);
     show_howmany_lines();
     for(int i = 0; i < tokens.size(); i++){
-        cout << tokens[i].type << " " << tokens[i].lexeme << endl;
+        cout << "i: " << i << " " << tokens[i].type << " " << tokens[i].lexeme << endl;
     }
     // 语法分析
     if(program() == 0){
