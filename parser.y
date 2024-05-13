@@ -4,8 +4,7 @@
 #include <string.h>
 %}
 
-%token ID NUM
-%token INT VOID
+%token INT VOID ID NUM
 %token IF ELSE WHILE RETURN
 %token LEQ LT GT GEQ EQ NEQ
 %token PLUS MINUS TIMES DIVIDE
@@ -137,7 +136,9 @@ arg_list: arg_list COMMA expression
 %%
 
 int main() {
+    printf("Enter C- program:\n");
     yyparse();
+    printf("Parsing completed.\n");
     return 0;
 }
 

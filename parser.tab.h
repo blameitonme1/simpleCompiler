@@ -54,10 +54,10 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID = 258,                      /* ID  */
-    NUM = 259,                     /* NUM  */
-    INT = 260,                     /* INT  */
-    VOID = 261,                    /* VOID  */
+    INT = 258,                     /* INT  */
+    VOID = 259,                    /* VOID  */
+    ID = 260,                      /* ID  */
+    NUM = 261,                     /* NUM  */
     IF = 262,                      /* IF  */
     ELSE = 263,                    /* ELSE  */
     WHILE = 264,                   /* WHILE  */
@@ -89,7 +89,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "parser.y"
+#line 13 "parser.y"
 
     char *string;
     int num;
